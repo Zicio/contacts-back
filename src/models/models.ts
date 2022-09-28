@@ -1,5 +1,5 @@
-export interface IContact {
+export interface IUser {
   id: string;
-  login: string;
+  username: string;
   password: string;
 }

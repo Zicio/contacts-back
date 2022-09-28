@@ -1,14 +1,14 @@
 import { Router, Request, Response } from "express";
-import registeredContacts from "./registeredContacts";
+import registeredUsers from "./registeredUsers";
 
 const router = Router();
 
 router.post("/authorization", (req: Request, res: Response) => {
   console.log(req.body);
 
-  const { login, password } = req.body;
-  const coincidence = registeredContacts.findIndex(
-    (e) => e.login === login && e.password === password
+  const { username, password } = req.body;
+  const coincidence = registeredUsers.findIndex(
+    (e) => e.username === username && e.password === password
   );
   res.json(coincidence);
 });
