@@ -1,4 +1,4 @@
-import router from "./src/router";
+import router from "./src/routers/router";
 import express from "express";
 import cors from "cors";
 
