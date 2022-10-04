@@ -8,7 +8,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(router);
-app.use(passport.initialize());
+// app.use(passport.initialize());
 
 const PORT = process.env.PORT || 7777;
 app.listen(PORT, () => {

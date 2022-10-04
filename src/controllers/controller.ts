@@ -12,7 +12,7 @@ export const postAuth = (req: Request, res: Response) => {
     const token: string = jwt.sign(
       {
         name: registeredUsers[coincidence].username,
-        id: registeredUsers[coincidence].id,
+        // id: registeredUsers[coincidence].id,
       },
       keys,
       { expiresIn: 3600 }
