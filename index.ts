@@ -1,12 +1,14 @@
 import router from "./src/routers/router";
 import express from "express";
 import cors from "cors";
+import passport from "passport";
 
 const app = express();
 
 app.use(cors());
 app.use(express.json());
 app.use(router);
+app.use(passport.initialize());
 
 const PORT = process.env.PORT || 7777;
 app.listen(PORT, () => {
