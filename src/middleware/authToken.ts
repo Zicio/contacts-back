@@ -2,23 +2,20 @@ import { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken";
 import keys from "../keys/keys";
 
-const authenticateToken = async (
+export const authToken = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
-  const token: string | undefined = req
-    .header("Authorization")
-    ?.replace("Bearer ", "");
-  if (!token) {
-    return res.status(401);
-  }
-
-  jwt.verify(token, keys, (err, user) => {
-    if (err) {
-      return res.status(403);
+  try {
+    const token: string | undefined = req.headers.authorization?.split(" ")[1];
+    if (!token) {
+      return res.status(403).json("Пользователь не авторизован");
     }
-    req.user = user;
+    const decodedData = jwt.verify(token, keys);
+    req.user = decodedData;
     next();
-  });
+  } catch (e) {
+    return res.status(403).json("Пользователь не авторизован");
+  }
 };

@@ -1,4 +1,4 @@
-import { IUser } from "./models/models";
+import { IUser } from "../models/models";
 const registeredUsers: IUser[] = [
   {
     id: "c28d8169-b1b1-47ac-bf48-8c5864269894",

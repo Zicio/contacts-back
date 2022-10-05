@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import jwt from "jsonwebtoken";
 import keys from "../keys/keys";
-import registeredUsers from "../registeredUsers";
+import registeredUsers from "../data/registeredUsers";
 
 export const postAuth = (req: Request, res: Response) => {
   const { username, password } = req.body;
@@ -12,12 +12,19 @@ export const postAuth = (req: Request, res: Response) => {
     const token: string = jwt.sign(
       {
         name: registeredUsers[coincidence].username,
-        // id: registeredUsers[coincidence].id,
       },
       keys,
-      { expiresIn: 3600 }
+      { expiresIn: "1h" }
     );
-    res.status(200).json(`Bearer ${token}`);
+
+    res
+      .status(200)
+      .cookie("token", `Bearer ${token}`, {
+        httpOnly: true,
+      })
+      .json();
+
+    // res.status(200).json(`Bearer ${token}`);
   } else {
     res.status(401).json("Неправильное имя пользователя/пароль");
   }
