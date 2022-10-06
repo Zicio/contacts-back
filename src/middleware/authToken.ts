@@ -8,7 +8,8 @@ export const authToken = async (
   next: NextFunction
 ) => {
   try {
-    const token: string | undefined = req.headers.authorization?.split(" ")[1];
+    console.log(req.cookies);
+    const token: string | undefined = req.cookies.token;
     if (!token) {
       return res.status(403).json("Пользователь не авторизован");
     }
@@ -16,6 +17,20 @@ export const authToken = async (
     req.user = decodedData;
     next();
   } catch (e) {
-    return res.status(403).json("Пользователь не авторизован");
+    res.clearCookie("token");
+    // res.redirect("/");
+    res.json("Пользователь не авторизован");
   }
+  // try {
+  //   const token: string | undefined = req.headers.authorization?.split(" ")[1];
+  //   if (!token) {
+  //     return res.status(403).json("Пользователь не авторизован");
+  //   }
+  //   const decodedData = jwt.verify(token, keys);
+  //   req.user = decodedData;
+  //   next();
+  // }
+  // catch(e) {
+  // return res.status(403).json("Пользователь не авторизован");
+  // })
 };

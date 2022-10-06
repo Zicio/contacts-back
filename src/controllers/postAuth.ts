@@ -19,10 +19,11 @@ export const postAuth = (req: Request, res: Response) => {
 
     res
       .status(200)
-      .cookie("token", `Bearer ${token}`, {
+      .cookie("token", token, {
+        expires: new Date(Date.now() + 90000),
         httpOnly: true,
       })
-      .json();
+      .json("Успешно");
 
     // res.status(200).json(`Bearer ${token}`);
   } else {
