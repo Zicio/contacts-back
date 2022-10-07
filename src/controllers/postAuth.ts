@@ -23,7 +23,7 @@ export const postAuth = (req: Request, res: Response) => {
         expires: new Date(Date.now() + 90000),
         httpOnly: true,
       })
-      .json("Успешно");
+      .json(registeredUsers[coincidence].username);
 
     // res.status(200).json(`Bearer ${token}`);
   } else {
