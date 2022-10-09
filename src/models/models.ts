@@ -10,3 +10,8 @@ export interface IContact {
   tel: string;
   city: string;
 }
+
+export interface IToken {
+  token: string;
+  username: string;
+}
