@@ -6,21 +6,25 @@ import loginData from "../data/loginData";
 import tokenData from "../data/tokenData";
 import { IToken } from "../models/models";
 
-export const postAuth = (req: Request, res: Response) => {
-  const { username, password } = req.body;
-  const coincidence = loginData.findIndex(
+export const postAuth = async (req: Request, res: Response) => {
+  const { username, password } = await req.body;
+  const coincidence: number = loginData.findIndex(
     (e) => e.username === username && e.password === password
   );
   if (coincidence !== -1) {
+    const firstKey: string = uuidv4();
+    const secondKey: string = uuidv4();
+
     const jwToken: string = jwt.sign(
       {
-        name: loginData[coincidence].username,
+        username: firstKey,
       },
       keys,
       { expiresIn: "1h" }
     );
+
     const token: IToken = {
-      token: uuidv4(),
+      token: secondKey,
       username: username,
     };
     tokenData.push(token);
