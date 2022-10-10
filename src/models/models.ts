@@ -5,6 +5,7 @@ export interface IUser {
 }
 
 export interface IContact {
+  id: string;
   name: string;
   surname: string;
   tel: string;
