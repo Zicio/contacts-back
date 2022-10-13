@@ -6,8 +6,9 @@ import loginData from "../data/loginData";
 import tokenData from "../data/tokenData";
 import { IToken } from "../models/models";
 
-export const postAuth = async (req: Request, res: Response) => {
-  const { username, password } = await req.body;
+const postAuth = async (req: Request, res: Response) => {
+  const { username, password }: { username: string; password: string } =
+    await req.body;
   const coincidence: number = loginData.findIndex(
     (e) => e.username === username && e.password === password
   );
@@ -17,7 +18,7 @@ export const postAuth = async (req: Request, res: Response) => {
 
     const jwToken: string = jwt.sign(
       {
-        username: firstKey,
+        id: firstKey,
       },
       keys,
       { expiresIn: "1h" }
@@ -43,3 +44,5 @@ export const postAuth = async (req: Request, res: Response) => {
     res.status(401).json("Неправильное имя пользователя/пароль");
   }
 };
+
+export default postAuth;
