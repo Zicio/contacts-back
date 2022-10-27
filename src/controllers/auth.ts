@@ -1,10 +1,11 @@
 import { Request, Response } from "express";
 import { v4 as uuidv4 } from "uuid";
 import jwt from "jsonwebtoken";
-import keys from "../keys/keys";
 import loginData from "../data/loginData";
 
-const postAuth = async (req: Request, res: Response) => {
+const auth = async (req: Request, res: Response) => {
+  const accessToken: string = process.env.ACCESS_SECRET as string;
+  const refreshToken: string = process.env.ACCESS_SECRET as string;
   const { username, password }: { username: string; password: string } =
     await req.body;
   const coincidence: number = loginData.findIndex(
@@ -12,16 +13,17 @@ const postAuth = async (req: Request, res: Response) => {
   );
   if (coincidence !== -1) {
     const id: string = uuidv4();
-    const jwToken: string = jwt.sign(
+    const acessJwToken: string = jwt.sign(
       {
         id: id,
       },
-      keys,
+      accessToken,
       { expiresIn: "1h" }
     );
+
     res.status(200);
-    res.cookie("jwToken", jwToken, {
-      expires: new Date(Date.now() + 90000),
+    res.cookie("accessJwToken", acessJwToken, {
+      expires: new Date(Date.now() + 3600000),
       httpOnly: true,
     });
     res.json(loginData[coincidence].username);
@@ -30,4 +32,4 @@ const postAuth = async (req: Request, res: Response) => {
   }
 };
 
-export default postAuth;
+export default auth;

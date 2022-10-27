@@ -2,6 +2,8 @@ import router from "./src/routers/router";
 import express from "express";
 import cors, { CorsOptions } from "cors";
 import cookieParser from "cookie-parser";
+import * as dotenv from "dotenv";
+dotenv.config({ path: __dirname + "/.env" });
 
 const app = express();
 

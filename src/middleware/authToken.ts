@@ -1,15 +1,16 @@
 import { NextFunction, Request, Response } from "express";
 import jwt, { JwtPayload } from "jsonwebtoken";
-import keys from "../keys/keys";
 
 const authToken = async (req: Request, res: Response, next: NextFunction) => {
+  const accessToken: string = process.env.ACCESS_SECRET as string;
+  const refreshToken: string = process.env.ACCESS_SECRET as string;
   // Проверяем присутствие и валидность куки с jwt в запрос пользователя
   try {
-    const { jwToken }: { jwToken: string } = await req.cookies;
-    if (!jwToken) {
+    const { accessJwToken }: { accessJwToken: string } = await req.cookies;
+    if (!accessJwToken) {
       return res.status(403).json("Пользователь не авторизован");
     }
-    const decodedData = jwt.verify(jwToken, keys) as JwtPayload;
+    const decodedData = jwt.verify(accessJwToken, accessToken) as JwtPayload;
     req.user = decodedData;
     next();
   } catch (e) {
