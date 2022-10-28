@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { v4 as uuidv4 } from "uuid";
+import * as crypto from "crypto";
 import jwt from "jsonwebtoken";
 import loginData from "../data/loginData";
 
@@ -20,10 +21,21 @@ const auth = async (req: Request, res: Response) => {
       accessKey,
       { expiresIn: "1h" }
     );
+    const refreshJwToken: string = jwt.sign(
+      {
+        value: crypto.randomBytes(4).toString("hex"),
+      },
+      refreshKey,
+      { expiresIn: "1h" }
+    );
 
     res.status(200);
     res.cookie("accessJwToken", acessJwToken, {
       expires: new Date(Date.now() + 3600000),
+      httpOnly: true,
+    });
+    res.cookie("refreshJwToken", refreshJwToken, {
+      expires: new Date(Date.now() + 6000000),
       httpOnly: true,
     });
     res.json(loginData[coincidence].username);
