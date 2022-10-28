@@ -1,16 +1,16 @@
 import { NextFunction, Request, Response } from "express";
 import jwt, { JwtPayload } from "jsonwebtoken";
 
-const authToken = async (req: Request, res: Response, next: NextFunction) => {
-  const accessToken: string = process.env.ACCESS_SECRET as string;
-  const refreshToken: string = process.env.ACCESS_SECRET as string;
+const checkAcess = async (req: Request, res: Response, next: NextFunction) => {
+  const accessKey: string = process.env.ACCESS_SECRET as string;
+  const refreshKey: string = process.env.ACCESS_SECRET as string;
   // Проверяем присутствие и валидность куки с jwt в запрос пользователя
   try {
     const { accessJwToken }: { accessJwToken: string } = await req.cookies;
     if (!accessJwToken) {
       return res.status(403).json("Пользователь не авторизован");
     }
-    const decodedData = jwt.verify(accessJwToken, accessToken) as JwtPayload;
+    const decodedData = jwt.verify(accessJwToken, accessKey) as JwtPayload;
     req.user = decodedData;
     next();
   } catch (e) {
@@ -19,4 +19,4 @@ const authToken = async (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
-export default authToken;
+export default checkAcess;

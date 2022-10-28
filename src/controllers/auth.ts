@@ -4,8 +4,8 @@ import jwt from "jsonwebtoken";
 import loginData from "../data/loginData";
 
 const auth = async (req: Request, res: Response) => {
-  const accessToken: string = process.env.ACCESS_SECRET as string;
-  const refreshToken: string = process.env.ACCESS_SECRET as string;
+  const accessKey: string = process.env.ACCESS_SECRET as string;
+  const refreshKey: string = process.env.ACCESS_SECRET as string;
   const { username, password }: { username: string; password: string } =
     await req.body;
   const coincidence: number = loginData.findIndex(
@@ -17,7 +17,7 @@ const auth = async (req: Request, res: Response) => {
       {
         id: id,
       },
-      accessToken,
+      accessKey,
       { expiresIn: "1h" }
     );
 
