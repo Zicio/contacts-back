@@ -14,7 +14,7 @@ const auth = async (req: Request, res: Response) => {
   );
   if (coincidence !== -1) {
     const id: string = uuidv4();
-    const acessJwToken: string = jwt.sign(
+    const accessJwToken: string = jwt.sign(
       {
         id: id,
       },
@@ -30,9 +30,8 @@ const auth = async (req: Request, res: Response) => {
     );
 
     res.status(200);
-    res.cookie("accessJwToken", acessJwToken, {
+    res.cookie("accessJwToken", accessJwToken, {
       expires: new Date(Date.now() + 3600000),
-      httpOnly: true,
     });
     res.cookie("refreshJwToken", refreshJwToken, {
       expires: new Date(Date.now() + 6000000),
