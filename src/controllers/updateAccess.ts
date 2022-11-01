@@ -33,6 +33,7 @@ const updateAccess = async (req: Request, res: Response) => {
       expires: new Date(Date.now() + 6000000),
       httpOnly: true,
     });
+    res.json("Токены доступа обновлены");
   } catch (e) {
     console.log(e);
   }

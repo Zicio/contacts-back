@@ -19,7 +19,7 @@ const auth = async (req: Request, res: Response) => {
         id: id,
       },
       accessKey,
-      { expiresIn: "1h" }
+      { expiresIn: "1m" }
     );
     const refreshJwToken: string = jwt.sign(
       {
@@ -31,7 +31,7 @@ const auth = async (req: Request, res: Response) => {
 
     res.status(200);
     res.cookie("accessJwToken", accessJwToken, {
-      expires: new Date(Date.now() + 3600000),
+      expires: new Date(Date.now() + 60000),
     });
     res.cookie("refreshJwToken", refreshJwToken, {
       expires: new Date(Date.now() + 6000000),

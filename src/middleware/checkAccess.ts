@@ -11,7 +11,6 @@ const checkAcess = async (req: Request, res: Response, next: NextFunction) => {
       return res.status(403).json("Пользователь не авторизован");
     }
     const decodedData = jwt.verify(accessJwToken, accessKey) as JwtPayload;
-    console.log(decodedData);
     req.user = decodedData;
     next();
   } catch (e) {
