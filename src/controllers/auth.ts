@@ -19,22 +19,22 @@ const auth = async (req: Request, res: Response) => {
         id: id,
       },
       accessKey,
-      { expiresIn: "1m" }
+      { expiresIn: "1h" }
     );
     const refreshJwToken: string = jwt.sign(
       {
         value: crypto.randomBytes(4).toString("hex"),
       },
       refreshKey,
-      { expiresIn: "1h" }
+      { expiresIn: "24h" }
     );
 
     res.status(200);
     res.cookie("accessJwToken", accessJwToken, {
-      expires: new Date(Date.now() + 60000),
+      expires: new Date(Date.now() + 3600000),
     });
     res.cookie("refreshJwToken", refreshJwToken, {
-      expires: new Date(Date.now() + 6000000),
+      expires: new Date(Date.now() + 86400000),
       httpOnly: true,
     });
     res.json(loginData[coincidence].username);
