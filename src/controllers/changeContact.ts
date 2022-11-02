@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { v4 as uuidv4 } from "uuid";
 import contacts from "../data/contacts";
+import sorting from "../funcs/func";
 import { IContact } from "../models/models";
 
 const changeContact = async (req: Request, res: Response) => {
@@ -15,6 +16,7 @@ const changeContact = async (req: Request, res: Response) => {
     } else {
       newContact.id = uuidv4();
       contacts.push(newContact);
+      sorting(contacts);
       res.status(201).json("Контакт успешно создан");
     }
   } catch (e) {
